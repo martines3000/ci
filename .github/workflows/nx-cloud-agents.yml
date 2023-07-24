@@ -43,6 +43,10 @@ on:
       timeout:
         required: false
         type: number
+      submodules:
+        required: false
+        type: boolean
+        default: false
 
 env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
@@ -87,6 +91,8 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: ${{ inputs.submodules }}
 
       - name: Detect package manager
         id: package_manager

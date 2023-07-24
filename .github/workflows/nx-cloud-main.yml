@@ -67,6 +67,10 @@ on:
       timeout:
         required: false
         type: number
+      submodules:
+        required: false
+        type: boolean
+        default: false
 
 env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
@@ -94,6 +98,7 @@ jobs:
         name: Checkout [Pull Request]
         if: ${{ github.event_name == 'pull_request' }}
         with:
+          submodules: ${{ inputs.submodules }}
           # By default, PRs will be checked-out based on the Merge Commit, but we want the actual branch HEAD.
           ref: ${{ github.event.pull_request.head.sha }}
           # We need to fetch all branches and commits so that Nx affected has a base to compare against.
@@ -103,6 +108,7 @@ jobs:
         name: Checkout [Default Branch]
         if: ${{ github.event_name != 'pull_request' }}
         with:
+          submodules: ${{ inputs.submodules }}
           # We need to fetch all branches and commits so that Nx affected has a base to compare against.
           fetch-depth: 0
 
